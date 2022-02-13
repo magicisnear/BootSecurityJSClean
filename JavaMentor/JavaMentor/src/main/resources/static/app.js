@@ -142,7 +142,7 @@ async function editUser(modal, id) {
                 <input class="form-control" type="text" id="age" value="${user.age}"><br>
                 <input class="form-control" type="text" id="email" value="${user.email}"><br>
                 <input class="form-control" type="password" id="password"><br>
-            
+                <input class="form-control" id="roles" type="text" value="${(user.roles).map(role => role.name)}">
             </form>
         `;
         modal.find('.modal-body').append(bodyForm);
@@ -155,7 +155,7 @@ async function editUser(modal, id) {
         let age = modal.find("#age").val().trim();
         let email = modal.find("#email").val().trim();
         let password = modal.find("#password").val().trim();
-
+        let roles = modal.find("#roles").val().trim();
         let data = {
             id: id,
             name : name,
@@ -163,7 +163,7 @@ async function editUser(modal, id) {
             age : age,
             email : email,
             password: password,
-            
+            roles: roles.name
         }
         const response = await userFetchService.updateUser(data, id);
 
