@@ -24,7 +24,7 @@ public class AdminController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/")
+    @GetMapping("/1")
     public String newPage(@AuthenticationPrincipal User user1, Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users); // список юзеров
@@ -59,7 +59,7 @@ public class AdminController {
     @GetMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id) {
         userService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/1";
     }
 
     @GetMapping("/admin/update/{id}")
@@ -74,7 +74,7 @@ public class AdminController {
     @PostMapping("/admin/update")
     public String updateUser(User user) {
         userService.saveUser(user);
-        return "redirect:/";
+        return "redirect:/1";
     }
 
     //add method for new Site
@@ -82,13 +82,13 @@ public class AdminController {
     @PostMapping("/admin/save")
     public String save(User user) {
         userService.saveUser(user);
-        return "redirect:/";
+        return "redirect:/1";
     }
 
     @PostMapping("/admin/delete")
     public String delete(Long id, Model model) {
         userService.deleteById(id);
-        return "redirect:/";
+        return "redirect:/1";
     }
 
     @GetMapping("/admin/findOne")
