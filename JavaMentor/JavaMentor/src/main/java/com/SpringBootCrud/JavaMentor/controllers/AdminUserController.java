@@ -10,7 +10,7 @@ public class AdminUserController {
 
     @GetMapping("/")
     public String getIndex() {
-        return "pages/index";
+        return "index";
     }
 
 }

@@ -31,9 +31,11 @@ async function getTableWithUsers() {
                 let tableFilling = `$(
                         <tr>
                             <td>${user.id}</td>
-                            <td>${user.login}</td>
-                            <td>${user.password.slice(0, 15)}...</td>
-                            <td>${user.age}</td>     
+                            <td>${user.name}</td>
+                            <td>${user.lastName}</td>
+                            <td>${user.age}</td>
+                            <td>${user.email}</td>   
+                            <td>${user.roles}</td>   
                             <td>
                                 <button type="button" data-userid="${user.id}" data-action="edit" class="btn btn-outline-secondary" 
                                 data-toggle="modal" data-target="#someDefaultModal"></button>
@@ -47,6 +49,7 @@ async function getTableWithUsers() {
                 table.append(tableFilling);
             })
         })
+
 
     // обрабатываем нажатие на любую из кнопок edit или delete
     // достаем из нее данные и отдаем модалке, которую к тому же открываем

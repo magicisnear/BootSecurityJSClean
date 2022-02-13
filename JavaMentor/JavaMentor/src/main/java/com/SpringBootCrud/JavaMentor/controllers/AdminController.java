@@ -2,10 +2,8 @@ package com.SpringBootCrud.JavaMentor.controllers;
 
 import com.SpringBootCrud.JavaMentor.exceptions.ThisNameAlreadyExistsException;
 import com.SpringBootCrud.JavaMentor.model.Role;
-import com.SpringBootCrud.JavaMentor.repository.UserRepository;
 import com.SpringBootCrud.JavaMentor.service.RoleService;
 import com.SpringBootCrud.JavaMentor.service.UserService;
-import com.SpringBootCrud.JavaMentor.service.UserServiceImpl;
 import com.SpringBootCrud.JavaMentor.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
