@@ -193,17 +193,6 @@ async function editUser(modal, id) {
     })
 }
 
-
-// удаляем юзера из модалки удаления
-// async function deleteUser(modal, id) {
-//     await userFetchService.deleteUser(id);
-//     getTableWithUsers();
-//     modal.find('.modal-title').html('');
-//     modal.find('.modal-body').html('User was deleted');
-//     let closeButton = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>`
-//     modal.find('.modal-footer').append(closeButton);
-// }
-
 async function deleteUser(modal, id) {
     let preuser1 = await userFetchService.findOneUser(id);
     let user = preuser1.json();
@@ -267,14 +256,6 @@ async function deleteUser(modal, id) {
 async function addNewUser() {
     $('#addNewUserButton').click(async () => {
 
-        // let addUserForm = $('#defaultSomeForm')
-        // let login = addUserForm.find('#AddNewUserLogin').val().trim();
-        // let password = addUserForm.find('#AddNewUserPassword').val().trim();
-        // let age = addUserForm.find('#AddNewUserAge').val().trim();
-        // let data = {
-        //     login: login, password: password, age: age
-        // }
-
         let addUserForm = $('#defaultSomeForm')
         let id = addUserForm.find("#id").val().trim();
         let name = addUserForm.find("#name").val().trim();
@@ -298,9 +279,6 @@ async function addNewUser() {
         const response = await userFetchService.addNewUser(data);
         if (response.ok) {
             getTableWithUsers();
-            addUserForm.find('#AddNewUserLogin').val('');
-            addUserForm.find('#AddNewUserPassword').val('');
-            addUserForm.find('#AddNewUserAge').val('');
         } else {
             let body = await response.json();
             let alert = `<div class="alert alert-danger alert-dismissible fade show col-12" role="alert" id="sharaBaraMessageError">
