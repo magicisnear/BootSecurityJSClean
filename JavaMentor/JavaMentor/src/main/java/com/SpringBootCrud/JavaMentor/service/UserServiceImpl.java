@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
-    public User findByID(Long id) {
-       return userRepository.findById(id).get();
+    public Optional<User> findByID(Long id) {
+        return userRepository.findById(id);
     }
 
     @Transactional
@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByName(String name) {
-        return userRepository.findByUserNameAndFetchRoles(name);
+    public Optional<User> findByName(String name) {
+        return Optional.ofNullable(userRepository.findByUserNameAndFetchRoles(name));
     }
 
     @Override

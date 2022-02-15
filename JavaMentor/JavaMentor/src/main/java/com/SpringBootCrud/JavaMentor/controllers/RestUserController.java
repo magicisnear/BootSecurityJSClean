@@ -1,6 +1,8 @@
 package com.SpringBootCrud.JavaMentor.controllers;
 
 import com.SpringBootCrud.JavaMentor.exceptions.DataInfoHandler;
+import com.SpringBootCrud.JavaMentor.exceptions.ThisNameAlreadyExistsException;
+import com.SpringBootCrud.JavaMentor.exceptions.UserIdNotFoundException;
 import com.SpringBootCrud.JavaMentor.exceptions.UserWithSuchLoginExist;
 import com.SpringBootCrud.JavaMentor.model.User;
 import com.SpringBootCrud.JavaMentor.service.UserService;
@@ -12,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -32,8 +35,11 @@ public class RestUserController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<User> apiGetOneUser(@PathVariable("id") long id) {
-        User user = userService.findByID(id);
+    public ResponseEntity<Optional<User>> apiGetOneUser(@PathVariable("id") long id) {
+        if(userService.findByID(id).isEmpty()) {
+            throw new UserIdNotFoundException();
+        }
+        Optional<User> user = userService.findByID(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -44,12 +50,12 @@ public class RestUserController {
             String error = getErrorsFromBindingResult(bindingResult);
             return new ResponseEntity<>(new DataInfoHandler(error), HttpStatus.BAD_REQUEST);
         }
-        try {
-            userService.saveUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            throw new UserWithSuchLoginExist("User with such login Exist");
+        if (userService.findByName(user.getName()).isPresent()) {
+            throw new ThisNameAlreadyExistsException();
         }
+        userService.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PutMapping("/users/{id}")

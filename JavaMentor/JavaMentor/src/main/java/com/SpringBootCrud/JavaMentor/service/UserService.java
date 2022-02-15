@@ -3,11 +3,12 @@ package com.SpringBootCrud.JavaMentor.service;
 import com.SpringBootCrud.JavaMentor.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
- User findByID(Long id);
+ Optional<User> findByID(Long id);
  List<User> getAllUsers();
  User saveUser(User user);
- User findByName(String name);
+ Optional<User> findByName(String name);
  void deleteById(Long id);
 }
