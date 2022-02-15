@@ -36,9 +36,6 @@ public class RestUserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Optional<User>> apiGetOneUser(@PathVariable("id") long id) {
-        if(userService.findByID(id).isEmpty()) {
-            throw new UserIdNotFoundException();
-        }
         Optional<User> user = userService.findByID(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -46,14 +43,15 @@ public class RestUserController {
     @PostMapping("/users")
     public ResponseEntity<DataInfoHandler> apiAddNewUser(@RequestBody User user,
                                                          BindingResult bindingResult) {
+
+        if (userService.findByName(user.getName()).isPresent()) {
+            return new ResponseEntity<>(new DataInfoHandler("Пользователь с таким именем уже существует"), HttpStatus.BAD_REQUEST);
+        }
         if (bindingResult.hasErrors()) {
             String error = getErrorsFromBindingResult(bindingResult);
             return new ResponseEntity<>(new DataInfoHandler(error), HttpStatus.BAD_REQUEST);
         }
-        if (userService.findByName(user.getName()).isPresent()) {
-            throw new ThisNameAlreadyExistsException();
-        }
-        userService.saveUser(user);
+          userService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
