@@ -5,7 +5,6 @@ $(async function () {
     addNewUser();
 })
 
-
 const userFetchService = {
     head: {
         'Accept': 'application/json', 'Content-Type': 'application/json', 'Referer': null
@@ -51,7 +50,6 @@ async function getTableWithUsers() {
             })
         })
 
-
     // обрабатываем нажатие на любую из кнопок edit или delete
     // достаем из нее данные и отдаем модалке, которую к тому же открываем
     $("#mainTableWithUsers").find('button').on('click', (event) => {
@@ -66,7 +64,6 @@ async function getTableWithUsers() {
         defaultModal.modal('show');
     })
 }
-
 
 async function getNewUserForm() {
     let button = $(`#SliderNewUserForm`);
@@ -83,7 +80,6 @@ async function getNewUserForm() {
         }
     })
 }
-
 
 // что то деалем при открытии модалки и при закрытии
 // основываясь на ее дата атрибутах
@@ -139,7 +135,7 @@ async function editUser(modal, id) {
                 <label for="age" class="col-form-label">Age</label>
                 <input class="form-control" type="text" id="age" value="${user.age}"><br>
                 
-                 <label for="email" class="col-form-label">Email</label>
+                <label for="email" class="col-form-label">Email</label>
                 <input class="form-control" type="text" id="email" value="${user.email}"><br>
                 
                 <label for="password" class="col-form-label">Password</label>
@@ -252,7 +248,6 @@ async function deleteUser(modal, id) {
     })
 }
 
-
 async function addNewUser() {
     $('#addNewUserButton').click(async () => {
 
@@ -274,7 +269,6 @@ async function addNewUser() {
             password: password,
             roles: [{id: roleID}]
         }
-
 
         const response = await userFetchService.addNewUser(data);
         if (response.ok) {
