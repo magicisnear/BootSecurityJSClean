@@ -39,10 +39,32 @@
 
         <div class="form-group align-items-center">
             <form id="defaultSomeForm" data-hidden=true style="display: none">
-                <input class="form-control" id="AddNewUserLogin" type="text" placeholder="login"><br>
-                <input class="form-control" id="AddNewUserPassword" type="password" placeholder="password"><br>
-                <input class="form-control" id="AddNewUserAge" type="number" placeholder="age"><br>
+
+                <label for="id" class="col-form-label">ID</label>
+                <input type="text" class="form-control" id="id" name="id" disabled><br>
+
+                <label for="name" class="col-form-label">Username</label>
+                <input class="form-control" type="text" id="name" ><br>
+
+                <label for="lastName" class="col-form-label">LastName</label>
+                <input class="form-control" type="text" id="lastName" ><br>
+
+                <label for="age" class="col-form-label">Age</label>
+                <input class="form-control" type="text" id="age" ><br>
+
+                <label for="email" class="col-form-label">Email</label>
+                <input class="form-control" type="text" id="email" ><br>
+
+                <label for="password" class="col-form-label">Password</label>
+                <input class="form-control" type="password" id="password"><br>
+
+                <label for="roleID" class="col-form-label">Role</label>
+                <select class="form-control selectpicker" name="roleID" id="roleID">
+                    <option value="1">ROLE_USER</option>
+                    <option value="2">ROLE_ADMIN</option>
+                </select>
                 <button class="btn btn-primary mb-2" type="button" id="addNewUserButton">Add new user</button>
+
             </form>
             <div class="p-2">
                 <button class="btn btn-outline-success" id="SliderNewUserForm">Show panel</button>

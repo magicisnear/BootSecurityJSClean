@@ -266,13 +266,35 @@ async function deleteUser(modal, id) {
 
 async function addNewUser() {
     $('#addNewUserButton').click(async () => {
+
+        // let addUserForm = $('#defaultSomeForm')
+        // let login = addUserForm.find('#AddNewUserLogin').val().trim();
+        // let password = addUserForm.find('#AddNewUserPassword').val().trim();
+        // let age = addUserForm.find('#AddNewUserAge').val().trim();
+        // let data = {
+        //     login: login, password: password, age: age
+        // }
+
         let addUserForm = $('#defaultSomeForm')
-        let login = addUserForm.find('#AddNewUserLogin').val().trim();
-        let password = addUserForm.find('#AddNewUserPassword').val().trim();
-        let age = addUserForm.find('#AddNewUserAge').val().trim();
+        let id = addUserForm.find("#id").val().trim();
+        let name = addUserForm.find("#name").val().trim();
+        let lastName = addUserForm.find("#lastName").val().trim();
+        let age = addUserForm.find("#age").val().trim();
+        let email = addUserForm.find("#email").val().trim();
+        let password = addUserForm.find("#password").val().trim();
+        let roleID = addUserForm.find("#roleID").val().trim();
+
         let data = {
-            login: login, password: password, age: age
+            id: id,
+            name: name,
+            lastName: lastName,
+            age: age,
+            email: email,
+            password: password,
+            roles: [{id: roleID}]
         }
+
+
         const response = await userFetchService.addNewUser(data);
         if (response.ok) {
             getTableWithUsers();
