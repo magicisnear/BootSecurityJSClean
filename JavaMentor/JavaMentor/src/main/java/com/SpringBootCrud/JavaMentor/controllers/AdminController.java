@@ -29,6 +29,4 @@ public class AdminController {
         model.addAttribute("setRoles", roleService.getAll()); // для формы добавления юзеров
         return "ExperimentalNewPage";
     }
-
-
 }
