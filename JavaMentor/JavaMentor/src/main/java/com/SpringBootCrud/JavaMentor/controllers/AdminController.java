@@ -29,7 +29,7 @@ public class AdminController {
         model.addAttribute("user1", user1); // текущий авторизированный пользователь
         model.addAttribute("user2", new User()); // для формы добавления юзеров
         model.addAttribute("setRoles", roleService.getAll()); // для формы добавления юзеров
-        return "MainPage";
+        return "ExperimentalNewPage";
     }
 
     @GetMapping("/admin")
