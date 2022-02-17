@@ -36,53 +36,38 @@ public class RestUserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<Optional<User>> apiGetOneUser(@PathVariable("id") long id) {
-        Optional<User> user = userService.findByID(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        if (userService.findByID(id).isPresent()) {
+            Optional<User> user = userService.findByID(id);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } else {
+            throw new UserIdNotFoundException();
+        }
     }
 
     @PostMapping("/users")
-    public ResponseEntity<DataInfoHandler> apiAddNewUser(@RequestBody User user,
-                                                         BindingResult bindingResult) {
-
+    public ResponseEntity<DataInfoHandler> apiAddNewUser(@RequestBody User user) {
         if (userService.findByName(user.getName()).isPresent()) {
             return new ResponseEntity<>(new DataInfoHandler("Пользователь с таким именем уже существует"), HttpStatus.BAD_REQUEST);
         }
-        if (bindingResult.hasErrors()) {
-            String error = getErrorsFromBindingResult(bindingResult);
-            return new ResponseEntity<>(new DataInfoHandler(error), HttpStatus.BAD_REQUEST);
-        }
-          userService.saveUser(user);
+        userService.saveUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
     @PutMapping("/users/{id}")
     public ResponseEntity<DataInfoHandler> apiUpdateUser(@PathVariable("id") long id,
-                                                         @RequestBody User user,
-                                                         BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            String error = getErrorsFromBindingResult(bindingResult);
-            return new ResponseEntity<>(new DataInfoHandler(error), HttpStatus.BAD_REQUEST);
+                                                         @RequestBody User user) {
+        if (userService.findByName(user.getName()).isPresent()) {
+            return new ResponseEntity<>(new DataInfoHandler("Пользователь с таким именем уже существует"), HttpStatus.BAD_REQUEST);
         }
-        try {
-            userService.saveUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (DataIntegrityViolationException e) {
-            throw new UserWithSuchLoginExist("User with such login Exist");
-        }
+        userService.saveUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("users/{id}")
     public ResponseEntity<DataInfoHandler> apiDeleteUser(@PathVariable("id") long id) {
         userService.deleteById(id);
         return new ResponseEntity<>(new DataInfoHandler("User was deleted"), HttpStatus.OK);
-    }
-
-    private String getErrorsFromBindingResult(BindingResult bindingResult) {
-        return bindingResult.getFieldErrors()
-                .stream()
-                .map(x -> x.getDefaultMessage())
-                .collect(Collectors.joining("; "));
     }
 
 }
