@@ -35,7 +35,11 @@ public class RestUserController {
 
     @GetMapping("/users/{id}")
     public ResponseEntity<User> apiGetOneUser(@PathVariable("id") long id) {
-            return new ResponseEntity<>(userService.findByID(id).get(), HttpStatus.OK);
+        if (!userService.findByID(id).isPresent()) {
+            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(userService.findByID(id).get(), HttpStatus.OK);
+
     }
 
     @PostMapping("/users")
