@@ -30,18 +30,12 @@ public class RestUserController {
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> apiGetAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<Optional<User>> apiGetOneUser(@PathVariable("id") long id) {
-        if (userService.findByID(id).isPresent()) {
-            Optional<User> user = userService.findByID(id);
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        } else {
-            throw new UserIdNotFoundException();
-        }
+    public ResponseEntity<User> apiGetOneUser(@PathVariable("id") long id) {
+            return new ResponseEntity<>(userService.findByID(id).get(), HttpStatus.OK);
     }
 
     @PostMapping("/users")

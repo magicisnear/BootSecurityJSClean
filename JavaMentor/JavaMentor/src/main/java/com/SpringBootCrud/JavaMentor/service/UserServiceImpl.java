@@ -1,8 +1,6 @@
 package com.SpringBootCrud.JavaMentor.service;
 
-import com.SpringBootCrud.JavaMentor.repository.RoleRepository;
 import com.SpringBootCrud.JavaMentor.repository.UserRepository;
-import com.SpringBootCrud.JavaMentor.model.Role;
 import com.SpringBootCrud.JavaMentor.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -34,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByName(String name) {
-        return Optional.ofNullable(userRepository.findByUserNameAndFetchRoles(name));
+        return userRepository.findByUserNameAndFetchRoles(name);
     }
 
     @Override
