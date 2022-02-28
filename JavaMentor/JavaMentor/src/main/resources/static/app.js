@@ -73,18 +73,18 @@ async function getTableWithUsers() {
 // что то деалем при открытии модалки и при закрытии
 // основываясь на ее дата атрибутах
 async function getDefaultModal() {
-    $('#someDefaultModal').modal({
+    $('#someDefaultModal').modal({ // находим модальное окно
         keyboard: true, backdrop: "static", show: false
-    }).on("show.bs.modal", (event) => {
+    }).on("show.bs.modal", (event) => {    // при клике показываем модальное окно
         let thisModal = $(event.target);
-        let userid = thisModal.attr('data-userid');
+        let userid = thisModal.attr('data-userid'); // узнаем id и действие для модалки
         let action = thisModal.attr('data-action');
         switch (action) {
             case 'edit':
-                editUser(thisModal, userid);
+                editUser(thisModal, userid); // если действие edit, то вызываем функцию editUser и передаём туда модалку и id;
                 break;
             case 'delete':
-                deleteUser(thisModal, userid);
+                deleteUser(thisModal, userid); // если действие delete, то вызываем функцию editUser и передаём туда модалку и id;
                 break;
         }
     }).on("hidden.bs.modal", (e) => {
@@ -98,18 +98,18 @@ async function getDefaultModal() {
 
 // редактируем юзера из модалки редактирования, забираем данные, отправляем
 async function editUser(modal, id) {
-    let preuser = await userFetchService.findOneUser(id);
-    let user = preuser.json();
+    let preuser = await userFetchService.findOneUser(id); // для будущего изменения юзера находим его в базе
+    let user = preuser.json(); // теперь полученный json преобразуем в объект
 
-    modal.find('.modal-title').html('Edit user');
+    modal.find('.modal-title').html('Edit user'); // в модальном окне указываем его смысл (надпись Edit User сверху слева)
 
-    let editButton = `<button  class="btn btn-outline-success" id="editButton">Edit</button>`;
-    let closeButton = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>`
-    modal.find('.modal-footer').append(editButton);
-    modal.find('.modal-footer').append(closeButton);
+    let editButton = `<button  class="btn btn-outline-success" id="editButton">Edit</button>`; //формируем кнопку Edit
+    let closeButton = `<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>`//формируем кнопку Close
+    modal.find('.modal-footer').append(editButton); // в модальное окно в футер добавляем кнопку Edit
+    modal.find('.modal-footer').append(closeButton);// в модальное окно в футер добавляем кнопку Close
 
-    user.then(user => {
-        let bodyForm = `
+    user.then(user => { // формируем полное тело модального окна, из юзера берем все данные и запихиваем и сохраняем их в value
+        let bodyForm = `  
             <form class="form-group" id="editUser">
                 
                 <label for="id" class="col-form-label">ID</label>
@@ -139,10 +139,10 @@ async function editUser(modal, id) {
 
             </form>
         `;
-        modal.find('.modal-body').append(bodyForm);
+        modal.find('.modal-body').append(bodyForm); // добавляем получившуюся форму в модальное окно
     })
 
-    $("#editButton").on('click', async () => {
+    $("#editButton").on('click', async () => { // из значений value выше достаём новые или старые данные, очищаем их
         let id = modal.find("#id").val().trim();
         let name = modal.find("#name").val().trim();
         let lastName = modal.find("#lastName").val().trim();
@@ -151,7 +151,7 @@ async function editUser(modal, id) {
         let password = modal.find("#password").val().trim();
         let roleID = modal.find("#roleID").val().trim();
 
-        let data = {
+        let data = { // теперь формируем тело запроса json для отправки
             id: id,
             name: name,
             lastName: lastName,
@@ -160,9 +160,9 @@ async function editUser(modal, id) {
             password: password,
             roles: [{id: roleID}]
         }
-        const response = await userFetchService.updateUser(data, id);
+        const response = await userFetchService.updateUser(data, id); // отправляем данные
 
-        if (response.ok) {
+        if (response.ok) { // если ответ ок, то загрузить таблицу, модалку закрыть
             getTableWithUsers();
             modal.modal('hide');
         } else {
