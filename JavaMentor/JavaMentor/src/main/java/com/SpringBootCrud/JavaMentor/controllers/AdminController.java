@@ -28,7 +28,7 @@ public class AdminController {
     }
 
     @GetMapping("/login1FA")
-    public String loginPage(Model model) {
+    public String preloginPage(Model model) {
         return "login1FA";
     }
 
@@ -41,6 +41,7 @@ public class AdminController {
         }
         return  "redirect:/login";
     }
+
 
 
 

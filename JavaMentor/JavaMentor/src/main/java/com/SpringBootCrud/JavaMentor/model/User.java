@@ -57,7 +57,7 @@ public class User implements UserDetails {
         return name;
     }
 
-    public User(Long id, String name, String password, Set<Role> roles, Long age, String lastName, String email, boolean isUsing2FA, String secret) {
+    public User(Long id, String name, String password, Set<Role> roles, Long age, String lastName, String email, boolean isUsing2FA) {
         this.id = id;
         this.name = name;
         this.password = password;

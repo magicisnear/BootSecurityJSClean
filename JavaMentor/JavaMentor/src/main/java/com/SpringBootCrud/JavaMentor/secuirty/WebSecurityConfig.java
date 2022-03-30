@@ -58,11 +58,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .authenticationDetailsSource(authenticationDetailsSource)
                 .loginPage("/login")
+                .loginPage("/login1FAQR")
                 .usernameParameter("name")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and().logout().permitAll()
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/login1FA");
     }
 
 
