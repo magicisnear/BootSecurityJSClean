@@ -19,6 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private securityService securityService;
 
+    @Autowired
+    private CustomWebAuthenticationDetailsSource authenticationDetailsSource;
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -43,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/**").hasRole("ADMIN")
                 .and()
                 .formLogin()
+                .authenticationDetailsSource(authenticationDetailsSource)
                 .loginPage("/login")
                 .usernameParameter("name")
                 .defaultSuccessUrl("/")
