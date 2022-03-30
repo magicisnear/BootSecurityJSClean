@@ -51,8 +51,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/login");
     }
 
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(securityService).passwordEncoder(bCryptPasswordEncoder());
-    }
+
 }

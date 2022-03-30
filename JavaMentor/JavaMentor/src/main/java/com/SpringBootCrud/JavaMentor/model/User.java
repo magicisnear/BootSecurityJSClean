@@ -1,5 +1,6 @@
 package com.SpringBootCrud.JavaMentor.model;
 
+import org.jboss.aerogear.security.otp.api.Base32;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,17 +28,36 @@ public class User implements UserDetails {
     private String lastName;
     @Column(name = "email")
     private String email;
+    @Column(name = "isUsing2FA")
+    private boolean isUsing2FA;
+    @Column(name = "secret")
+    private String secret;
 
+    public boolean isUsing2FA() {
+        return isUsing2FA;
+    }
+
+    public void setUsing2FA(boolean using2FA) {
+        isUsing2FA = using2FA;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
     public User() {
+        this.secret = Base32.random();
     }
 
     public String getName() {
         return name;
     }
 
-
-    public User(Long id, String name, String password, Set<Role> roles, Long age, String lastName, String email) {
+    public User(Long id, String name, String password, Set<Role> roles, Long age, String lastName, String email, boolean isUsing2FA, String secret) {
         this.id = id;
         this.name = name;
         this.password = password;
@@ -45,15 +65,8 @@ public class User implements UserDetails {
         this.age = age;
         this.lastName = lastName;
         this.email = email;
-    }
-
-    public User(Long id, String name, String password,Long age, String lastName, String email) {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.age = age;
-        this.lastName = lastName;
-        this.email = email;
+        this.isUsing2FA = isUsing2FA;
+        this.secret = Base32.random();;
     }
 
     public Long getAge() {
